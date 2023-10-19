@@ -14,7 +14,7 @@ const register = async (req, res) => {
         const hashPass = await bcrypt.hash(details.password, 15)
         const token = jwt.sign({ email: details.email }, process.env.Secret_Key, { expiresIn: "24h" })
         const user = await userModel.create({ ...details, password: hashPass })
-        res.status(200).send({ msg: "user created", msg2: true, user, token })
+        res.status(200).send({ msg: "user created", msg2: true, name: user.name, id: user._id, token })
     } catch (error) {
         res.status(500).send({ Error: error })
     }
