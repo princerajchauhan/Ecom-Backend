@@ -9,7 +9,7 @@ const register = async (req, res) => {
         const details = req.body
         const duplicate = await userModel.findOne({ email: details.email })
         if (duplicate) {
-            return res.status(200).send({ msg: "user already registered with this emai." })
+            return res.status(200).send({ msg: "user already registered with this email.", msg2:false })
         }
         const hashPass = await bcrypt.hash(details.password, 15)
         const token = jwt.sign({ email: details.email }, process.env.Secret_Key, { expiresIn: "24h" })
