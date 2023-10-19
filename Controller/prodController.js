@@ -9,12 +9,12 @@ const register = async (req, res) => {
         const details = req.body
         const duplicate = await userModel.findOne({ email: details.email })
         if (duplicate) {
-            return res.status(200).send({ msg: "user already registered with this email.", msg2:false })
+            return res.status(200).send({ msg: "user already registered with this email.", msg2: false })
         }
         const hashPass = await bcrypt.hash(details.password, 15)
         const token = jwt.sign({ email: details.email }, process.env.Secret_Key, { expiresIn: "24h" })
         const user = await userModel.create({ ...details, password: hashPass })
-        res.status(200).send({ msg: "user created", user, token })
+        res.status(200).send({ msg: "user created", msg2: true, user, token })
     } catch (error) {
         res.status(500).send({ Error: error })
     }
@@ -82,9 +82,9 @@ const removeFromCart = async (req, res) => {
         if (user) {
             const cartitemIndex = user.cart.findIndex(item => item.product.equals(productId))
             if (cartitemIndex >= 0) {
-                if (user.cart[cartitemIndex].quantity > 1){
+                if (user.cart[cartitemIndex].quantity > 1) {
                     user.cart[cartitemIndex].quantity -= 1
-                }else
+                } else
                     user.cart.pull({ product: productId })
             }
 
