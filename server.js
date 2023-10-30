@@ -45,8 +45,8 @@ server.use("/api/create-checkout-session", async (req, res) => {
         payment_method_types: ['card'],
         line_items: lineItems,
         mode: 'payment',
-        success_url: "https://prince-mystore.netlify.app/success",
-        cancel_url: "https://prince-mystore.netlify.app/cancel"
+        success_url: "https://prince-ecom.vercel.app/success",
+        cancel_url: "https://prince-ecom.vercel.app//cancel"
     })
     res.json({id: session.id})
 })
